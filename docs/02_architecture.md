@@ -11,44 +11,9 @@ Merchants lose significant margin to "friendly fraud" and illegitimate chargebac
 
 ### How the Architecture Works (Diagram Explanation)
 The system is built on a modern, decoupled **Agentic LLM stack**. 
-Instead of relying on a black-box machine learning classifier, it uses **Google Gemini** as a reasoning engine (Agent Reasoning Layer). When a dispute arrives via the **Streamlit UI** (Presentation Layer), the backend (Service Layer) wakes up the agent. The agent then dynamically pulls required context—like GPS delivery matches or chat logs—from a secure SQLite database (Data Layer) using explicitly defined, read-only **FastMCP Tools** (MCP Server Layer). Finally, the agent synthesizes this evidence into a formal defense p```mermaid
-graph TD
-    subgraph Presentation Layer
-        UI[Streamlit Dashboard<br/>Tab 1: Live Dispute Desk<br/>Tab 2: Audit Trail<br/>Tab 3: Accuracy Report]
-    end
+Instead of relying on a black-box machine learning classifier, it uses **Google Gemini** as a reasoning engine (Agent Reasoning Layer). When a dispute arrives via the **Streamlit UI** (Presentation Layer), the backend (Service Layer) wakes up the agent. The agent then dynamically pulls required context—like GPS delivery matches or chat logs—from a secure SQLite database (Data Layer) using explicitly defined, read-only **FastMCP Tools** (MCP Server Layer). Finally, the agent synthesizes this evidence into a formal defense package.
 
-    subgraph Service Layer
-        API[FastAPI + Uvicorn<br/>/api/disputes/score<br/>/api/audit-logs<br/>/api/evaluation/metrics]
-    end
-
-    subgraph Agent Reasoning Layer
-        LLM[Google Gemini Reasoning Engine<br/>Evidence Evaluation & Legal Synthesis]
-    end
-
-    subgraph Dynamic RAG Knowledge Layer
-        URLS[Live Authoritative URLs<br/>• Stripe Dispute Docs<br/>• Razorpay Chargeback Rules<br/>• Visa / Mastercard Portals<br/>• Merchant Live Terms of Service]
-        CRAWLER[Automated Web Ingestion & Chunker<br/>Semantic Policy Parser]
-        PINECONE[(Pinecone Vector DB<br/>Embedded Policy Rules & URLs)]
-        
-        URLS --> CRAWLER
-        CRAWLER --> PINECONE
-    end
-
-    subgraph MCP Server Layer
-        MCP[FastMCP Server<br/>Read-Only Database Context Tools]
-    end
-
-    subgraph Data Layer
-        DB[(SQLite Database<br/>Transactions · Shipping · Support)]
-    end
-
-    UI -- HTTP POST/GET --> API
-    API -- Dispute Triage --> LLM
-    LLM -- Semantic Rule Query --> PINECONE
-    PINECONE -- Matched Policy Clauses + Live URLs --> LLM
-    LLM -- Evidence Gathering --> MCP
-    MCP -- SQL Queries --> DB
-```
+![AI Risk Manager System Architecture](./architecture_diagram.jpg)
 
 ---
 
