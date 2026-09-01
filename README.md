@@ -27,36 +27,7 @@ An enterprise-grade, **Multi-Agent Fintech Risk & Chargeback Dispute Defense Sys
 
 ## 🏛️ System Architecture
 
-```mermaid
-flowchart TD
-    subgraph UI ["Presentation Layer"]
-        ST[Streamlit Dashboard / UI - app.py]
-    end
-
-    subgraph Service ["API Service Layer"]
-        API[FastAPI Backend - main.py]
-    end
-
-    subgraph AI ["Agent Reasoning Layer"]
-        AG[Gemini Reasoning Agent - src/agent.py]
-        PE[Policy Engine / Pinecone - src/policy_engine.py]
-    end
-
-    subgraph MCP ["MCP Server Layer"]
-        MCP_S[FastMCP Server - src/mcp_server.py]
-    end
-
-    subgraph DB ["Data Layer"]
-        SQL[(SQLite Database - risk_manager.db)]
-    end
-
-    ST -->|Dispute Actions & Evaluation| API
-    API -->|Triggers Analysis| AG
-    AG <-->|Semantic Policy Context| PE
-    AG <-->|Structured Tool Calls| MCP_S
-    MCP_S <-->|Read-Only SQL Queries| SQL
-    API <-->|Audit Trails & Dispute Queue| SQL
-```
+![AI Risk Manager System Architecture](docs/architecture_diagram.jpg)
 
 ---
 
