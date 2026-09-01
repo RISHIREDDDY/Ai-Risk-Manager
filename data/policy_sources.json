@@ -1,0 +1,74 @@
+[
+  {
+    "id": "visa-ce3-fraud",
+    "name": "Visa Compelling Evidence 3.0 (Rule 10.4)",
+    "issuer": "Visa Global",
+    "reason_codes": ["10.4", "fraud_card_absent", "unauthorized_transaction", "fraud"],
+    "source_url": "https://corporate.visa.com/dam/VCOM/download/about-visa/visa-rules-public.pdf",
+    "category": "CARD_NETWORK_RULE",
+    "text": "Visa Core Rules Section 10.4.2 — Compelling Evidence 3.0 (CE 3.0) for Card-Absent Fraud: A merchant can definitively overturn a Dispute Reason Code 10.4 (Other Fraud) by providing proof of 2 prior undisputed transactions between 120 and 365 days old that share at least 2 core data elements with the disputed transaction: (1) IP Address, (2) Device Fingerprint / ID, (3) Delivery / Shipping Address, or (4) Customer Account ID. When CE 3.0 requirements are satisfied, the dispute is pre-emptively resolved in favor of the merchant."
+  },
+  {
+    "id": "visa-13-1-non-receipt",
+    "name": "Visa Merchandise Not Received (Rule 13.1)",
+    "issuer": "Visa Global",
+    "reason_codes": ["13.1", "merchandise_not_received", "item_not_received", "goods_not_delivered"],
+    "source_url": "https://corporate.visa.com/dam/VCOM/download/about-visa/visa-rules-public.pdf",
+    "category": "CARD_NETWORK_RULE",
+    "text": "Visa Dispute Rules Section 13.1 — Merchandise/Services Not Received: Valid compelling evidence requires proof of physical delivery to the cardholder billing/shipping address via a recognized commercial carrier with Carrier GPS coordinates matching within 50 meters of the delivery destination and/or physical/digital signature confirmation. In digital goods scenarios, valid server access logs, IP download timestamps, and activation key usage constitute full proof of fulfillment."
+  },
+  {
+    "id": "mastercard-4837-fraud",
+    "name": "Mastercard No Cardholder Authorization (Code 4837)",
+    "issuer": "Mastercard",
+    "reason_codes": ["4837", "no_cardholder_authorization", "fraud", "unrecognized_charge"],
+    "source_url": "https://www.mastercard.us/en-us/business/overview/support/rules.html",
+    "category": "CARD_NETWORK_RULE",
+    "text": "Mastercard Chargeback Guide Section 4837 — No Cardholder Authorization: If the transaction was processed with 3D Secure / EMV 3DS Authentication (Authentication Value / CAVV / AAV present), liability shifts completely to the card issuer under Mastercard Liability Shift Rules. For non-3DS transactions, compelling evidence of past undisputed transactions and verified delivery to cardholder address is required to represent the charge."
+  },
+  {
+    "id": "mastercard-4853-goods",
+    "name": "Mastercard Goods/Services Dispute (Code 4853)",
+    "issuer": "Mastercard",
+    "reason_codes": ["4853", "goods_not_as_described", "defective_merchandise", "partial_fulfillment"],
+    "source_url": "https://www.mastercard.us/en-us/business/overview/support/rules.html",
+    "category": "CARD_NETWORK_RULE",
+    "text": "Mastercard Dispute Resolution Section 4853 — Cardholder Dispute (Defective / Not as Described / Partial Fulfillment): For partial delivery claims, merchant must provide itemized fulfillment records showing prorated values of delivered goods. For quality/defect disputes, merchant must demonstrate cardholder did not attempt to return the item or return was initiated outside agreed terms of sale."
+  },
+  {
+    "id": "rbi-2fa-liability-shift",
+    "name": "RBI Master Direction on Digital Payment Security & 2FA",
+    "issuer": "Reserve Bank of India",
+    "reason_codes": ["rbi_2fa", "upi_fraud", "unauthorized_upi", "in_domestic_fraud"],
+    "source_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/12022F5FBFEBC3F6C4CB09E2BBD7556A3E920.PDF",
+    "category": "REGULATORY_DIRECTIVE",
+    "text": "Reserve Bank of India (RBI) Directive on Electronic Payment Security: In domestic payment transactions (Cards / UPI / Netbanking), mandatory Two-Factor Authentication (2FA via dynamic SMS OTP, UPI MPIN, or tokenized biometric auth) provides absolute validation of payer intent. If 2FA validation succeeded with correct CVV/MPIN and OTP logs from the telecom gateway, liability for fraudulent dispute claims shifts away from the merchant to the issuing institution."
+  },
+  {
+    "id": "stripe-dispute-defense",
+    "name": "Stripe Merchant Chargeback Defense Standards",
+    "issuer": "Stripe Payments",
+    "reason_codes": ["fraudulent", "product_not_received", "subscription_canceled", "unrecognized"],
+    "source_url": "https://stripe.com/docs/disputes",
+    "category": "GATEWAY_GUIDELINE",
+    "text": "Stripe Dispute Resolution Standards: A winning evidence submission requires: (1) AVS Zip Match ('Y') and CVV Match ('M'), (2) Carrier tracking number with 'Delivered' status and matching destination address, (3) Customer communication transcripts acknowledging receipt or usage of product, and (4) Clear audit logs showing the cardholder accepted store terms and conditions at checkout."
+  },
+  {
+    "id": "razorpay-dispute-guide",
+    "name": "Razorpay Indian E-Commerce Dispute Framework",
+    "issuer": "Razorpay India",
+    "reason_codes": ["upi_dispute", "razorpay_chargeback", "non_receipt_india", "upi_vpa_fraud"],
+    "source_url": "https://razorpay.com/docs/payments/disputes/",
+    "category": "GATEWAY_GUIDELINE",
+    "text": "Razorpay Chargeback Documentation: In UPI transactions, proof of UPI VPA authentication and NPCI UTR (Unique Transaction Reference) validation confirms settlement. For courier deliveries across India (Delhivery, BlueDart, Bluedart, Ecom Express), a signed POD or OTP-verified delivery confirmation constitutes complete dispute defense."
+  },
+  {
+    "id": "merchant-terms-of-sale",
+    "name": "Acme Commerce India — Official Terms of Sale & Refund Policy",
+    "issuer": "Merchant Store Policy",
+    "reason_codes": ["refund_refused", "return_window_expired", "credit_not_processed", "store_policy"],
+    "source_url": "https://stripe.com/docs/disputes/responding",
+    "category": "MERCHANT_STORE_POLICY",
+    "text": "Acme Commerce India Terms of Sale §4 (Returns & Refunds): Standard merchandise has a strict 14-day return window starting from the verified carrier delivery timestamp. Returned goods must be unopened in original packaging with RMA authorization. Digital goods, software licenses, and personalized products are strictly non-refundable once delivery or download telemetry is recorded."
+  }
+]

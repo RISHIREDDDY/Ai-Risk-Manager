@@ -1,0 +1,13 @@
+fastapi==0.115.12
+uvicorn==0.34.3
+fastmcp==2.5.1
+google-genai==1.14.0
+pandas==2.2.3
+faker==37.1.0
+scikit-learn==1.6.1
+streamlit==1.45.1
+python-dotenv==1.1.0
+httpx==0.28.1
+pinecone>=5.0.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0

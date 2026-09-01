@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-risk-manager"
+version = "1.0.0"
+description = "Autonomous Chargeback & Fraud Evidence Responder using Gemini and FastMCP"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "scripts*", "tests*"]
+
+[tool.pyright]
+include = [".", "src", "scripts", "tests"]
+extraPaths = [".", "src", "tests"]
