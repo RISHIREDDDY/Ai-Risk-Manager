@@ -47,7 +47,8 @@ from policy_engine import retrieve_policy_context
 # ---------------------------------------------------------------------------
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
 
 MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")  # Ultra-fast Gemini model
 FALLBACK_MODELS = ["gemini-3.5-flash", "gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-flash-latest"]
@@ -210,6 +211,18 @@ You MUST respond with ONLY a valid JSON object (no markdown, no code fences) wit
 
 
 # ---------------------------------------------------------------------------
+# Tool compatibility helper
+# ---------------------------------------------------------------------------
+def _invoke_mcp_tool(tool_ref: Any, *args: Any, **kwargs: Any) -> dict:
+    if callable(tool_ref):
+        return tool_ref(*args, **kwargs)
+    fn = getattr(tool_ref, "fn", None)
+    if callable(fn):
+        return fn(*args, **kwargs)
+    raise TypeError(f"Unsupported tool reference type: {type(tool_ref).__name__}")
+
+
+# ---------------------------------------------------------------------------
 # Evidence gathering (using MCP tool functions directly)
 # ---------------------------------------------------------------------------
 def gather_evidence(dispute_id: str) -> dict:
@@ -225,7 +238,7 @@ def gather_evidence(dispute_id: str) -> dict:
     Returns a dict with all evidence for fair evaluation.
     """
     # Tool 1: Get transaction details
-    transaction = get_transaction(dispute_id)
+    transaction = _invoke_mcp_tool(get_transaction, dispute_id)
 
     if "error" in transaction:
         return {"error": transaction["error"]}
@@ -236,16 +249,16 @@ def gather_evidence(dispute_id: str) -> dict:
     payment_method = transaction.get("payment_method", "Credit Card")
 
     # Tool 2: Get delivery proof
-    delivery = get_delivery_proof(order_id)
+    delivery = _invoke_mcp_tool(get_delivery_proof, order_id)
 
     # Tool 3: Get communication logs
-    communication = check_communication_logs(order_id)
+    communication = _invoke_mcp_tool(check_communication_logs, order_id)
 
     # Tool 4 (Fairness): Get customer dispute history
-    customer_history = get_customer_dispute_history(customer_id) if customer_id else {}
+    customer_history = _invoke_mcp_tool(get_customer_dispute_history, customer_id) if customer_id else {}
 
     # Tool 5 (Fairness): Get customer counter-evidence
-    customer_evidence = get_customer_evidence(dispute_id)
+    customer_evidence = _invoke_mcp_tool(get_customer_evidence, dispute_id)
 
     # RAG: Retrieve governing card network & merchant policies via Pinecone
     retrieved_policies = retrieve_policy_context(
@@ -345,6 +358,16 @@ UPI/2FA authentication data may be pending gateway webhook sync. If upi_vpa_matc
 {auth_warning}
 
 Based on ALL evidence from BOTH sides and the governing rules, apply the defense rubric with fairness considerations, check for sarcasm in chat transcripts, cite the exact rule section & URL, and return your JSON decision."""
+
+    if client is None:
+        return {
+            "decision": "ACCEPT_DISPUTE",
+            "confidence": 0.0,
+            "reasoning": "Gemini API key is not configured. Returning a safe fallback decision.",
+            "evidence_letter": "Unable to generate evidence letter because Gemini API credentials are not configured.",
+            "customer_notification": "We are reviewing your dispute and will respond shortly.",
+            "sarcasm_detected": False,
+        }
 
     # Build prioritized list of candidate models
     candidate_models = [MODEL] + [m for m in FALLBACK_MODELS if m != MODEL]
