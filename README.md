@@ -8,7 +8,7 @@
 [![Pinecone](https://img.shields.io/badge/VectorDB-Pinecone-000000.svg)](https://www.pinecone.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An enterprise-grade, **Multi-Agent Fintech Risk & Chargeback Dispute Defense System**. Rather than relying on rigid black-box classifiers, this platform leverages **Google Gemini reasoning agents** orchestrated via **Model Context Protocol (MCP)** tools and **Pinecone vector retrieval** to autonomously investigate disputes, cite mandatory card network rules (Visa / Mastercard / RBI), compute financial outcomes, and generate legally binding chargeback rebuttal packages.
+**Multi-Agent Fintech Risk & Chargeback Dispute Defense System**. Rather than relying on rigid black-box classifiers, this platform leverages **Google Gemini reasoning agents** orchestrated via **Model Context Protocol (MCP)** tools and **Pinecone vector retrieval** to autonomously investigate disputes, cite mandatory card network rules (Visa / Mastercard / RBI), compute financial outcomes, and generate legally binding chargeback rebuttal packages.
 
 ---
 
